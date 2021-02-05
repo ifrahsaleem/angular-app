@@ -1,4 +1,4 @@
-<app-filter-textbox></app-filter-textbox>
+<app-filter-textbox (changed)="filter($event)"></app-filter-textbox>
 <br />
 <br />
 <table id="customers">
@@ -9,14 +9,14 @@
     </tr>
     <!-- structural directive -->
     <tr *ngFor ="let cust of filteredCustomers">
-        <td><a>{{cust.name}}</a></td>
+        <td><a>{{cust.name | capitalize }}</a></td>
         <td>{{cust.city}}</td>
-        <td>{{cust.orderTotal}}</td>
+        <td>{{cust.orderTotal | currency:currencyCode:'symbol'}}</td>
     </tr>
     <tr *ngIf="filteredCustomers.length">
         <!-- <td></td> -->
         <td colspan="2">&nbsp;</td>
-        <td>{{customersOrderTotal}}</td>
+        <td>{{customersOrderTotal | currency:currencyCode:'symbol'}}</td>
     </tr>
     <tr *ngIf="!filteredCustomers.length">
         <td colspan="4">No customers found</td>
