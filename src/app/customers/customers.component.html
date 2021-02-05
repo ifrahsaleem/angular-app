@@ -1,2 +1,6 @@
-<h1> {{title}}</h1>
-<app-customers-list></app-customers-list>
+<!-- <h1 [innerHtml] = "title"></h1> -->
+<!-- interpolation -->
+<h1 [hidden]="!isVisible"> {{title}}</h1> 
+<button (click)="changeVisibility()">Show/Hide</button>
+<br/>
+<app-customers-list [customers]="people"></app-customers-list>
