@@ -1,14 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import {ICustomer} from '../../shared/interfaces';
+import { SorterService } from '../../core/sorter.service';
 @Component({
     selector: 'app-customers-list',
     templateUrl: './customers-list.component.html'
 })
 export class CustomersListComponent implements OnInit {
 
-    private _customers: ICustomer[] = [];
-    @Input() customers: ICustomer[] = [];
+    //private _customers: ICustomer[] = [];
+    //@Input() customers: ICustomer[] = [];
     //  {
     //     // this.filteredCustomers = this._customers;
     //     // this.calculateOrders();
@@ -21,16 +22,29 @@ export class CustomersListComponent implements OnInit {
     //         this.calculateOrders();
     //     }
     // }
+
+    private _customers: ICustomer[] = [];
+    @Input() get customers(): ICustomer[] {
+        return this._customers;
+    }
+    
+    set customers(value: ICustomer[]) {
+        if (value) {
+            this.filteredCustomers = this._customers = value;
+            this.calculateOrders();
+        }
+    }
     
     filteredCustomers: ICustomer[] = [];
     customersOrderTotal: number = 0;
     currencyCode: string = 'USD';
     
-    constructor() {}
+    constructor(private sorterService: SorterService) {}
     
     ngOnInit() {
-       // console.log(this.customers);
-        this.filteredCustomers = this.customers;
+       
+        //this.filteredCustomers = this.customers;
+        console.log('blabla ',this.customers);
         this.calculateOrders();
         // this.filteredCustomers = [
         //     { id: 1, name: 'john Doe', city: 'Phoenix', orderTotal: 9.99, customerSince: new Date(2014, 7, 10) },
@@ -64,7 +78,6 @@ export class CustomersListComponent implements OnInit {
     }
 
     sort(prop:string) {
-        //sorter service will handle sorting
-
+       this.sorterService.sort(this.filteredCustomers, prop);
     }
 }

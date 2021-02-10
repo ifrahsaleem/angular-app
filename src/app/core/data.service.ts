@@ -14,7 +14,8 @@ export class DataService {
     constructor(private http: HttpClient) { }
 
     getCustomers() : Observable<ICustomer[]> {
-
+      console.log('here');
+      console.log(this.http.get<ICustomer[]>(this.baseUrl + 'customers.json'));
       return this.http.get<ICustomer[]>(this.baseUrl + 'customers.json')
       .pipe(catchError(this.handleError));
     }
